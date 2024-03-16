@@ -40,7 +40,7 @@ export function ProductTest(user, doNegativeCase) {
         addProductPayloadTestObjects.forEach(objTest => {
             res = http.post(user.baseUrl + "/v1/product", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
             check(res, {
-                [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
+                [TEST_NAME + 'wrong value should return 400 |' + JSON.stringify(objTest)]: (r) => r.status === 400,
             })
         });
     }
