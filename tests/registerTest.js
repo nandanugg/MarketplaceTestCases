@@ -35,10 +35,11 @@ export function RegistrationTest(user, doNegativeCase) {
 
     // Positive case 6
     const genUsrname = generateUniqueUsername()
+    const genPassword = generateRandomPassword()
     res = http.post(user.baseUrl + "/v1/user/register", JSON.stringify({
         username: genUsrname,
         name: generateUniqueName(),
-        password: generateRandomPassword()
+        password: genPassword
     }), { headers: { 'Content-Type': 'application/json' } })
 
     console.log(res.json())
@@ -51,6 +52,7 @@ export function RegistrationTest(user, doNegativeCase) {
 
     user.name = res.json().data.name
     user.username = res.json().data.username
+    user.password = genPassword
     user.token = res.json().data.accessToken
 
     if (doNegativeCase) {
