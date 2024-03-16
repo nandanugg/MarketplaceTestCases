@@ -63,7 +63,7 @@ export default function () {
 
 function NewUserJourneyTest(baseUrl) {
   const user = {
-    baseUrl: "http://localhost:8080",
+    baseUrl: "http://localhost:8000",
     name: "",
     token: "",
     products: [],
