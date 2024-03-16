@@ -4,7 +4,7 @@ const TEST_NAME = "(upload test)"
 
 // Prepare the payload using the file to be uploaded
 var payload = {
-    file: http.file(open('../figure/image136KB.jpg', 'b'), 'image1.jpg'),
+    file: http.file(open('../figure/image15KB.jpg', 'b'), 'image1.jpg'),
 };
 export function UploadTest(user, doNegativeCase) {
     var url = user.baseUrl + '/v1/image';
