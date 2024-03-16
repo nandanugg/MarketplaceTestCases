@@ -76,7 +76,7 @@ export function BankAccountTest(user, doNegativeCase) {
             [TEST_NAME + 'patch bank account empty auth should return 401']: (r) => r.status === 401,
         })
         // Negative case, empty path values 
-        res = http.patch(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
+        res = http.patch(user.baseUrl + "/v1/bank/account/", {}, { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
         check(res, {
             [TEST_NAME + 'patch bank account empty path value should return 404']: (r) => r.status === 404,
         })
