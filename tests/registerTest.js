@@ -16,16 +16,17 @@ const registerPayloadTestObjects = generateTestObjects({
 const TEST_NAME = "(register test)"
 
 export function RegistrationTest(user, doNegativeCase) {
+    let res;
     if (doNegativeCase) {
         // Negative case, test empty body
-        let res = http.post(user.baseUrl + "/v1/user/register", {}, { headers: { 'Content-Type': 'application/json' } })
+        res = http.post(user.baseUrl + "/v1/user/register", {}, { headers: { 'Content-Type': 'application/json' } })
         check(res, {
             [TEST_NAME + 'empty body should return 400']: (r) => r.status === 400,
         })
 
         // Negative case, test all possible wrong values
         registerPayloadTestObjects.forEach(objTest => {
-            let res = http.post(user.baseUrl + "/v1/user/register", objTest, { headers: { 'Content-Type': 'application/json' } })
+            res = http.post(user.baseUrl + "/v1/user/register", objTest, { headers: { 'Content-Type': 'application/json' } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })

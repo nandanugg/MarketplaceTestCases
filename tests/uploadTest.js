@@ -7,10 +7,11 @@ var payload = {
     file: http.file(open('../figure/image15KB.jpg', 'b'), 'image1.jpg'),
 };
 export function UploadTest(user, doNegativeCase) {
+    let res;
     var url = user.baseUrl + '/v1/image';
     if (doNegativeCase) {
         // Negative case, empty auth
-        let res = http.post(url, {}, {});
+        res = http.post(url, {}, {});
         check(res, {
             [TEST_NAME + "empty auth should return 401"]: (v) => v.status === 401
         })

@@ -13,16 +13,17 @@ const loginPayloadTestObjects = generateTestObjects({
 const TEST_NAME = "(login test)"
 
 export function LoginTest(user, doNegativeCase) {
+    let res;
     if (doNegativeCase) {
         // Negative case, empty body
-        let res = http.post(user.baseUrl + "/v1/user/login", {}, { headers: { 'Content-Type': 'application/json' } })
+        res = http.post(user.baseUrl + "/v1/user/login", {}, { headers: { 'Content-Type': 'application/json' } })
         check(res, {
             [TEST_NAME + 'empty body should return 400']: (r) => r.status === 400,
         })
 
         // Negative case, test all possible wrong values
         loginPayloadTestObjects.forEach(objTest => {
-            let res = http.post(user.baseUrl + "/v1/user/login", objTest, { headers: { 'Content-Type': 'application/json' } })
+            res = http.post(user.baseUrl + "/v1/user/login", objTest, { headers: { 'Content-Type': 'application/json' } })
             check(res, {
                 [TEST_NAME + 'wrong values should return 400']: (r) => r.status === 400,
             })

@@ -15,9 +15,10 @@ const bankAccountTestObjects = generateTestObjects({
 const TEST_NAME = "(product test)"
 
 export function BankAccountTest(user, doNegativeCase) {
+    let res;
     if (doNegativeCase) {
         // Negative case, empty auth
-        let res = http.post(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json' } })
+        res = http.post(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json' } })
         check(res, {
             [TEST_NAME + 'empty auth should return 401']: (r) => r.status === 401,
         })
@@ -28,7 +29,7 @@ export function BankAccountTest(user, doNegativeCase) {
         })
         // Negative case, test all possible wrong values
         bankAccountTestObjects.forEach(objTest => {
-            let res = http.post(user.baseUrl + "/v1/bank/account", objTest, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+            res = http.post(user.baseUrl + "/v1/bank/account", objTest, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })
@@ -53,7 +54,7 @@ export function BankAccountTest(user, doNegativeCase) {
 
     if (doNegativeCase) {
         // Negative case, empty auth
-        let res = http.get(user.baseUrl + "/v1/bank/account")
+        res = http.get(user.baseUrl + "/v1/bank/account")
         check(res, {
             [TEST_NAME + 'empty auth should return 401']: (r) => r.status === 401,
         })
@@ -69,7 +70,7 @@ export function BankAccountTest(user, doNegativeCase) {
 
     if (doNegativeCase) {
         // Negative case, empty auth
-        let res = http.patch(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json' } })
+        res = http.patch(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json' } })
         check(res, {
             [TEST_NAME + 'empty auth should return 401']: (r) => r.status === 401,
         })
@@ -90,7 +91,7 @@ export function BankAccountTest(user, doNegativeCase) {
         })
         // Negative case, test all possible wrong values
         bankAccountTestObjects.forEach(objTest => {
-            let res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, objTest, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+            res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, objTest, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })
