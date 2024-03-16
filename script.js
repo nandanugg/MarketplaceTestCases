@@ -65,7 +65,7 @@ export default function () {
 }
 
 function NewUserJourneyTest() {
-  const user = {
+  let user = {
     baseUrl: "http://localhost:8000",
     name: "",
     token: "",
@@ -75,9 +75,9 @@ function NewUserJourneyTest() {
   }
 
   console.log("registration test started")
-  RegistrationTest(user, false)
+  user = RegistrationTest(user, true)
   console.log("login test started")
-  LoginTest(user, true)
+  user = LoginTest(user, true)
   // BankAccountTest(user, true)
   // UploadTest(user, true)
   // ProductTest(user, true)

@@ -63,4 +63,5 @@ export function LoginTest(user, doNegativeCase) {
     user.name = res.json().data.name
     user.username = res.json().data.username
     user.token = res.json().data.accessToken
+    return user
 }

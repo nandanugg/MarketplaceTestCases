@@ -64,4 +64,5 @@ export function RegistrationTest(user, doNegativeCase) {
             [TEST_NAME + 'username exists should return 409']: (v) => v.status === 409
         })
     }
+    return user
 }
