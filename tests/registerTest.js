@@ -43,7 +43,7 @@ export function RegistrationTest(user, doNegativeCase) {
     }), { headers: { 'Content-Type': 'application/json' } })
 
     check(res, {
-        [TEST_NAME + 'correct user shoud return 200']: (r) => r.status === 200,
+        [TEST_NAME + 'correct user shoud return 201']: (r) => r.status === 201,
         [TEST_NAME + 'correct user should return name']: (r) => r.json().data.name,
         [TEST_NAME + 'correct user should return username']: (r) => r.json().data.username,
         [TEST_NAME + 'correct user should return accessToken']: (r) => r.json().data.accessToken
