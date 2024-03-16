@@ -113,7 +113,7 @@ export function BankAccountTest(user, doNegativeCase) {
         [TEST_NAME + 'bank account number should be updated']: (v) => v.body().data[0].bankAccountNumber === updateBankAcc.bankAccountNumber
     })
 
-    user.bankAccounts.push({
-        ...res.body().data[0]
-    })
+    user.bankAccounts.push(
+        res.body().data[0]
+    )
 }

@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { generateTestObjects, generateUniqueName } from "../helper"
+import { generateTestObjects, generateUniqueName } from "../helper.js"
 
 const addProductPayloadTestObjects = generateTestObjects({
     name: { type: "string", minLength: 5, maxLength: 60, notNull: true },
