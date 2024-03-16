@@ -78,9 +78,12 @@ function NewUserJourneyTest() {
   user = RegistrationTest(user, true)
   console.log("login test started")
   user = LoginTest(user, true)
-  // BankAccountTest(user, true)
-  // UploadTest(user, true)
-  // ProductTest(user, true)
+  console.log("bank account test started")
+  user = BankAccountTest(user, true)
+  console.log("upload test started")
+  user = UploadTest(user, true)
+  console.log("product test started")
+  user = ProductTest(user, true)
 }
 
 

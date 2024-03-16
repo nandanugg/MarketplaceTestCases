@@ -117,4 +117,5 @@ export function BankAccountTest(user, doNegativeCase) {
     user.bankAccounts.push(
         res.json().data[0]
     )
+    return user
 }

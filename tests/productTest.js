@@ -58,5 +58,5 @@ export function ProductTest(user, doNegativeCase) {
     check(res, {
         [TEST_NAME + 'correct create product should return 200']: (r) => r.status === 200,
     })
-
+    return user
 }
