@@ -23,7 +23,7 @@ export function LoginTest(user, doNegativeCase) {
 
         // Negative case, test all possible wrong values
         loginPayloadTestObjects.forEach(objTest => {
-            res = http.post(user.baseUrl + "/v1/user/login", JSON.stringnify(objTest), { headers: { 'Content-Type': 'application/json' } })
+            res = http.post(user.baseUrl + "/v1/user/login", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json' } })
             check(res, {
                 [TEST_NAME + 'wrong values should return 400']: (r) => r.status === 400,
             })

@@ -38,7 +38,7 @@ export function ProductTest(user, doNegativeCase) {
         })
         // Negative case, test all possible wrong values
         addProductPayloadTestObjects.forEach(objTest => {
-            res = http.post(user.baseUrl + "/v1/product", JSON.stringnify(objTest), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+            res = http.post(user.baseUrl + "/v1/product", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })
