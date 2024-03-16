@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { generateTestObjects } from "../helper";
+import { generateTestObjects } from "../helper.js";
 import { check } from 'k6';
 
 const bankAccountTestObjects = generateTestObjects({

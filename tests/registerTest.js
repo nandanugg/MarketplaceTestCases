@@ -1,4 +1,4 @@
-import { generateTestObjects } from "../helper";
+import { generateTestObjects } from "../helper.js";
 import http from 'k6/http';
 
 const registerPayloadTestObjects = generateTestObjects({
