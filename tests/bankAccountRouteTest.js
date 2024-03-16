@@ -62,6 +62,7 @@ export function BankAccountTest(user, doNegativeCase) {
 
     // Positive case
     res = http.get(user.baseUrl + "/v1/bank/account", { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+    console.log(user.token)
     console.log(res.json())
     check(res, {
         [TEST_NAME + 'get bank account should return 200']: (r) => r.status === 200,
