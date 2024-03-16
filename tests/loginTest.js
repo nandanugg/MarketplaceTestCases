@@ -1,4 +1,5 @@
 import http from 'k6/http';
+import { check } from 'k6';
 import { generateRandomPassword, generateTestObjects, generateUniqueUsername } from "../helper.js";
 
 const loginPayloadTestObjects = generateTestObjects({

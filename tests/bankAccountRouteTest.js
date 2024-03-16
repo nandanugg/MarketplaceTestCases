@@ -1,4 +1,5 @@
 import http from 'k6/http';
+import { check } from 'k6';
 import { generateTestObjects } from "../helper.js";
 import { check } from 'k6';
 

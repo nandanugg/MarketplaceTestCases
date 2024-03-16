@@ -1,5 +1,5 @@
 import http from 'k6/http';
-
+import { check } from 'k6';
 const TEST_NAME = "(upload test)"
 
 // Prepare the payload using the file to be uploaded

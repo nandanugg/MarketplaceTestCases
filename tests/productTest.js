@@ -1,4 +1,5 @@
 import http from 'k6/http';
+import { check } from 'k6';
 import { generateTestObjects, generateUniqueName } from "../helper.js"
 
 const addProductPayloadTestObjects = generateTestObjects({
