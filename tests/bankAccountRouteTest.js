@@ -12,7 +12,7 @@ const bankAccountTestObjects = generateTestObjects({
     bankAccountNumber: "asdasdasdasd"
 })
 
-const TEST_NAME = "(product test)"
+const TEST_NAME = "(bank account test)"
 
 export function BankAccountTest(user, doNegativeCase) {
     let res;
