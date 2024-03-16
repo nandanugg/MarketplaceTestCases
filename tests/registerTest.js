@@ -44,8 +44,8 @@ export function RegistrationTest(user, doNegativeCase) {
     check(res, {
         [TEST_NAME + 'correct user shoud return 200']: (r) => r.status === 200,
         [TEST_NAME + 'correct user should return name']: (r) => r.body().data.name,
-        [TEST_NAME + 'correct user should return username']: (r) => r.body().username,
-        [TEST_NAME + 'correct user should return accessToken']: (r) => r.body().accessToken
+        [TEST_NAME + 'correct user should return username']: (r) => r.body().data.username,
+        [TEST_NAME + 'correct user should return accessToken']: (r) => r.body().data.accessToken
     })
 
     user.name = res.body().data.name
