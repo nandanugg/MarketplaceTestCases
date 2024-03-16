@@ -34,23 +34,12 @@ export function RegistrationTest(user, doNegativeCase) {
     }
 
     // Positive case 6
-    let count = 0
-    while (true) {
-        const genUsrname = generateUniqueUsername()
-        res = http.post(user.baseUrl + "/v1/user/register", {
-            username: genUsrname,
-            name: generateUniqueName(),
-            password: generateRandomPassword()
-        }, { headers: { 'Content-Type': 'application/json' } })
-        if (res.status === 200) break;
-        if (res.status === 409) {
-            console.warn(genUsrname + " is already exists!")
-            count++
-        }
-        if (count > 3) {
-            console.error("Username not too granular! Maybe add more words?")
-        }
-    }
+    const genUsrname = generateUniqueUsername()
+    res = http.post(user.baseUrl + "/v1/user/register", {
+        username: genUsrname,
+        name: generateUniqueName(),
+        password: generateRandomPassword()
+    }, { headers: { 'Content-Type': 'application/json' } })
 
     check(res, {
         [TEST_NAME + 'correct user shoud return 200']: (r) => r.status === 200,

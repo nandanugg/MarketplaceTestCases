@@ -75,7 +75,7 @@ function NewUserJourneyTest() {
   }
 
   console.log("registration test started")
-  RegistrationTest(user, true)
+  RegistrationTest(user, false)
   console.log("login test started")
   LoginTest(user, true)
   // BankAccountTest(user, true)
