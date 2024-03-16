@@ -64,7 +64,7 @@ export default function () {
   NewUserJourneyTest()
 }
 
-function NewUserJourneyTest(baseUrl) {
+function NewUserJourneyTest() {
   const user = {
     baseUrl: "http://localhost:8000",
     name: "",
