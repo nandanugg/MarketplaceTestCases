@@ -35,11 +35,11 @@ export function RegistrationTest(user, doNegativeCase) {
 
     // Positive case 6
     const genUsrname = generateUniqueUsername()
-    res = http.post(user.baseUrl + "/v1/user/register", {
+    res = http.post(user.baseUrl + "/v1/user/register", JSON.stringify({
         username: genUsrname,
         name: generateUniqueName(),
         password: generateRandomPassword()
-    }, { headers: { 'Content-Type': 'application/json' } })
+    }), { headers: { 'Content-Type': 'application/json' } })
 
     console.log(res.json())
     check(res, {
@@ -55,11 +55,11 @@ export function RegistrationTest(user, doNegativeCase) {
 
     if (doNegativeCase) {
         // Negative case, username exists
-        res = http.post(user.baseUrl + "/v1/user/register", {
+        res = http.post(user.baseUrl + "/v1/user/register", JSON.stringify({
             username: genUsrname,
             name: generateUniqueName(),
             password: generateRandomPassword()
-        }, { headers: { 'Content-Type': 'application/json' } })
+        }), { headers: { 'Content-Type': 'application/json' } })
         check(res, {
             [TEST_NAME + 'username exists should return 409']: (v) => v.status === 409
         })
