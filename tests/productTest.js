@@ -32,13 +32,13 @@ export function ProductTest(user, doNegativeCase) {
             [TEST_NAME + 'empty auth should return 401']: (r) => r.status === 401,
         })
         // Negative case, empty body 
-        res = http.post(user.baseUrl + "/v1/product", JSON.stringify({}), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+        res = http.post(user.baseUrl + "/v1/product", JSON.stringify({}), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
         check(res, {
             [TEST_NAME + 'empty body should return 400']: (r) => r.status === 400,
         })
         // Negative case, test all possible wrong values
         addProductPayloadTestObjects.forEach(objTest => {
-            res = http.post(user.baseUrl + "/v1/product", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+            res = http.post(user.baseUrl + "/v1/product", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })
@@ -54,7 +54,7 @@ export function ProductTest(user, doNegativeCase) {
         condition: "new",
         tags: ["okbeli"],
         isPurchaseable: true
-    }), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+    }), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
     check(res, {
         [TEST_NAME + 'correct create product should return 200']: (r) => r.status === 200,
     })

@@ -23,13 +23,13 @@ export function BankAccountTest(user, doNegativeCase) {
             [TEST_NAME + 'empty auth should return 401']: (r) => r.status === 401,
         })
         // Negative case, empty body 
-        res = http.post(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+        res = http.post(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
         check(res, {
             [TEST_NAME + 'empty body 400']: (r) => r.status === 400,
         })
         // Negative case, test all possible wrong values
         bankAccountTestObjects.forEach(objTest => {
-            res = http.post(user.baseUrl + "/v1/bank/account", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+            res = http.post(user.baseUrl + "/v1/bank/account", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })
@@ -47,7 +47,7 @@ export function BankAccountTest(user, doNegativeCase) {
         bankAccountName: "Supriyati",
         bankAccountNumber: "1241412311"
     }
-    res = http.post(user.baseUrl + "/v1/bank/account", JSON.stringify(createBankAcc), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+    res = http.post(user.baseUrl + "/v1/bank/account", JSON.stringify(createBankAcc), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
     check(res, {
         [TEST_NAME + 'create bank account should return 200']: (v) => v.status === 200
     })
@@ -61,9 +61,7 @@ export function BankAccountTest(user, doNegativeCase) {
     }
 
     // Positive case
-    res = http.get(user.baseUrl + "/v1/bank/account", { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
-    console.log(user.token)
-    console.log(res.json())
+    res = http.get(user.baseUrl + "/v1/bank/account", { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
     check(res, {
         [TEST_NAME + 'get bank account should return 200']: (r) => r.status === 200,
         [TEST_NAME + 'get bank account should have at least one bank account']: (r) => r.json().data.length > 0
@@ -77,23 +75,23 @@ export function BankAccountTest(user, doNegativeCase) {
             [TEST_NAME + 'empty auth should return 401']: (r) => r.status === 401,
         })
         // Negative case, empty path values 
-        res = http.patch(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+        res = http.patch(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
         check(res, {
             [TEST_NAME + 'empty path value should return 404']: (r) => r.status === 404,
         })
         // Negative case, wrong path values
-        res = http.patch(user.baseUrl + "/v1/bank/account/sSIS12sd", {}, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+        res = http.patch(user.baseUrl + "/v1/bank/account/sSIS12sd", {}, { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
         check(res, {
             [TEST_NAME + 'wrong path value should return 404']: (r) => r.status === 404,
         })
         // Negative case, empty body 
-        res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, {}, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+        res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, {}, { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
         check(res, {
             [TEST_NAME + 'empty body should return 400']: (r) => r.status === 400,
         })
         // Negative case, test all possible wrong values
         bankAccountTestObjects.forEach(objTest => {
-            res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+            res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })
@@ -101,11 +99,11 @@ export function BankAccountTest(user, doNegativeCase) {
     }
 
     // Positive case
-    res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, JSON.stringify(updateBankAcc), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+    res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, JSON.stringify(updateBankAcc), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
     check(res, {
         [TEST_NAME + 'update bank account should return 200']: (r) => r.status === 200,
     })
-    res = http.get(user.baseUrl + "/v1/bank/account", { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+    res = http.get(user.baseUrl + "/v1/bank/account", { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
     check(res, {
         [TEST_NAME + 'get bank account after update should return 200']: (r) => r.status === 200,
         [TEST_NAME + 'get bank account should have at least one bank account']: (r) => r.json().data.length > 0
