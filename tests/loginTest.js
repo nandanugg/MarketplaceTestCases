@@ -18,14 +18,14 @@ export function LoginTest(user, doNegativeCase) {
         // Negative case, empty body
         res = http.post(user.baseUrl + "/v1/user/login", {}, { headers: { 'Content-Type': 'application/json' } })
         check(res, {
-            [TEST_NAME + 'empty body should return 400']: (r) => r.status === 400,
+            [TEST_NAME + 'post login empty body should return 400']: (r) => r.status === 400,
         })
 
         // Negative case, test all possible wrong values
         loginPayloadTestObjects.forEach(objTest => {
             res = http.post(user.baseUrl + "/v1/user/login", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json' } })
             check(res, {
-                [TEST_NAME + 'wrong values should return 400']: (r) => r.status === 400,
+                [TEST_NAME + 'post login wrong values should return 400']: (r) => r.status === 400,
             })
         });
 
@@ -35,7 +35,7 @@ export function LoginTest(user, doNegativeCase) {
             password: generateRandomPassword()
         }), { headers: { 'Content-Type': 'application/json' } })
         check(res, {
-            [TEST_NAME + 'user not found should return 404']: (r) => r.status === 404,
+            [TEST_NAME + 'post login user not found should return 404']: (r) => r.status === 404,
         })
 
         // Negative case, wrong password 
@@ -44,7 +44,7 @@ export function LoginTest(user, doNegativeCase) {
             password: generateRandomPassword()
         }), { headers: { 'Content-Type': 'application/json' } })
         check(res, {
-            [TEST_NAME + 'wrong password should return 400']: (r) => r.status === 400,
+            [TEST_NAME + 'post login wrong password should return 400']: (r) => r.status === 400,
         })
     }
 

@@ -21,14 +21,14 @@ export function RegistrationTest(user, doNegativeCase) {
         // Negative case, test empty body
         res = http.post(user.baseUrl + "/v1/user/register", {}, { headers: { 'Content-Type': 'application/json' } })
         check(res, {
-            [TEST_NAME + 'empty body should return 400']: (r) => r.status === 400,
+            [TEST_NAME + 'post register empty body should return 400']: (r) => r.status === 400,
         })
 
         // Negative case, test all possible wrong values
         registerPayloadTestObjects.forEach(objTest => {
             res = http.post(user.baseUrl + "/v1/user/register", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json' } })
             check(res, {
-                [TEST_NAME + 'wrong value should return 400 | ' + JSON.stringify(objTest)]: (r) => r.status === 400,
+                [TEST_NAME + 'post register wrong value should return 400 | ' + JSON.stringify(objTest)]: (r) => r.status === 400,
             })
         });
     }
@@ -62,7 +62,7 @@ export function RegistrationTest(user, doNegativeCase) {
             password: generateRandomPassword()
         }), { headers: { 'Content-Type': 'application/json' } })
         check(res, {
-            [TEST_NAME + 'username exists should return 409']: (v) => v.status === 409
+            [TEST_NAME + 'post register username exists should return 409']: (v) => v.status === 409
         })
     }
     return user

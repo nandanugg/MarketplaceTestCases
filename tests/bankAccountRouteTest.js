@@ -20,18 +20,18 @@ export function BankAccountTest(user, doNegativeCase) {
         // Negative case, empty auth
         res = http.post(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json' } })
         check(res, {
-            [TEST_NAME + 'empty auth should return 401']: (r) => r.status === 401,
+            [TEST_NAME + 'post bank account empty auth should return 401']: (r) => r.status === 401,
         })
         // Negative case, empty body 
         res = http.post(user.baseUrl + "/v1/bank/account", {}, { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
         check(res, {
-            [TEST_NAME + 'empty body 400']: (r) => r.status === 400,
+            [TEST_NAME + 'post bank account empty body 400']: (r) => r.status === 400,
         })
         // Negative case, test all possible wrong values
         bankAccountTestObjects.forEach(objTest => {
             res = http.post(user.baseUrl + "/v1/bank/account", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
             check(res, {
-                [TEST_NAME + 'wrong value should return 400 |' + JSON.stringify(objTest)]: (r) => r.status === 400,
+                [TEST_NAME + 'post bank account wrong value should return 400 |' + JSON.stringify(objTest)]: (r) => r.status === 400,
             })
         });
     }

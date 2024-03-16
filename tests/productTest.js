@@ -29,18 +29,18 @@ export function ProductTest(user, doNegativeCase) {
         // Negative case, empty auth
         res = http.post(user.baseUrl + "/v1/product", JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } })
         check(res, {
-            [TEST_NAME + 'empty auth should return 401']: (r) => r.status === 401,
+            [TEST_NAME + 'post product empty auth should return 401']: (r) => r.status === 401,
         })
         // Negative case, empty body 
         res = http.post(user.baseUrl + "/v1/product", JSON.stringify({}), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
         check(res, {
-            [TEST_NAME + 'empty body should return 400']: (r) => r.status === 400,
+            [TEST_NAME + 'post product empty body should return 400']: (r) => r.status === 400,
         })
         // Negative case, test all possible wrong values
         addProductPayloadTestObjects.forEach(objTest => {
             res = http.post(user.baseUrl + "/v1/product", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
             check(res, {
-                [TEST_NAME + 'wrong value should return 400 |' + JSON.stringify(objTest)]: (r) => r.status === 400,
+                [TEST_NAME + 'post product wrong value should return 400 |' + JSON.stringify(objTest)]: (r) => r.status === 400,
             })
         });
     }
