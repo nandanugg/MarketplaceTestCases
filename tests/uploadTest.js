@@ -29,5 +29,5 @@ export function UploadTest(user, doNegativeCase) {
         [TEST_NAME + "correct file should have imageUrl"]: (v) => v.body().imageUrl,
     })
 
-    user.imageUrls.push(res.body().imageUrl)
+    user.imageUrls.push(res.json().imageUrl)
 }
