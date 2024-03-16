@@ -66,7 +66,7 @@ export function BankAccountTest(user, doNegativeCase) {
         [TEST_NAME + 'get bank account should return 200']: (r) => r.status === 200,
         [TEST_NAME + 'get bank account should have at least one bank account']: (r) => r.json().data.length > 0
     })
-    const usrBankAccId = res.body().data[0].bankAccountId
+    const usrBankAccId = res.json().data[0].bankAccountId
 
     if (doNegativeCase) {
         // Negative case, empty auth
@@ -115,6 +115,6 @@ export function BankAccountTest(user, doNegativeCase) {
     })
 
     user.bankAccounts.push(
-        res.body().data[0]
+        res.json().data[0]
     )
 }

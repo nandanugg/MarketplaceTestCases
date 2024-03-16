@@ -60,7 +60,7 @@ export function LoginTest(user, doNegativeCase) {
         [TEST_NAME + 'current user should have token exists']: (r) => r.json().data.accessToken
     })
 
-    user.name = res.body().data.name
-    user.username = res.body().data.username
-    user.token = res.body().data.accessToken
+    user.name = res.json().data.name
+    user.username = res.json().data.username
+    user.token = res.json().data.accessToken
 }

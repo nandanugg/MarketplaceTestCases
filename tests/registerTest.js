@@ -49,9 +49,9 @@ export function RegistrationTest(user, doNegativeCase) {
         [TEST_NAME + 'correct user should return accessToken']: (r) => r.json().data.accessToken
     })
 
-    user.name = res.body().data.name
-    user.username = res.body().data.username
-    user.token = res.body().data.accessToken
+    user.name = res.json().data.name
+    user.username = res.json().data.username
+    user.token = res.json().data.accessToken
 
     if (doNegativeCase) {
         // Negative case, username exists
