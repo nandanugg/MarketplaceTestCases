@@ -1,5 +1,5 @@
 import { check } from 'k6';
-import { generateTestObjects, generateUniqueName } from "../helper.js";
+import { generateTestObjects, generateUniqueName, generateRandomPassword } from "../helper.js";
 import http from 'k6/http';
 
 const registerPayloadTestObjects = generateTestObjects({
