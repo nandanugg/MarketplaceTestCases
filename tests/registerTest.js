@@ -41,7 +41,7 @@ export function RegistrationTest(user, doNegativeCase) {
         password: generateRandomPassword()
     }, { headers: { 'Content-Type': 'application/json' } })
 
-    console.log(r.json())
+    console.log(res.json())
     check(res, {
         [TEST_NAME + 'correct user shoud return 200']: (r) => r.status === 200,
         [TEST_NAME + 'correct user should return name']: (r) => r.json().data.name,
