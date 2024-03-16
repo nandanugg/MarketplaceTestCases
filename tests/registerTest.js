@@ -26,7 +26,7 @@ export function RegistrationTest(user, doNegativeCase) {
 
         // Negative case, test all possible wrong values
         registerPayloadTestObjects.forEach(objTest => {
-            res = http.post(user.baseUrl + "/v1/user/register", objTest, { headers: { 'Content-Type': 'application/json' } })
+            res = http.post(user.baseUrl + "/v1/user/register", JSON.stringnify(objTest), { headers: { 'Content-Type': 'application/json' } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })
@@ -43,9 +43,9 @@ export function RegistrationTest(user, doNegativeCase) {
 
     check(res, {
         [TEST_NAME + 'correct user shoud return 200']: (r) => r.status === 200,
-        [TEST_NAME + 'correct user should return name']: (r) => r.body().data.name,
-        [TEST_NAME + 'correct user should return username']: (r) => r.body().data.username,
-        [TEST_NAME + 'correct user should return accessToken']: (r) => r.body().data.accessToken
+        [TEST_NAME + 'correct user should return name']: (r) => r.json().data.name,
+        [TEST_NAME + 'correct user should return username']: (r) => r.json().data.username,
+        [TEST_NAME + 'correct user should return accessToken']: (r) => r.json().data.accessToken
     })
 
     user.name = res.body().data.name

@@ -11,12 +11,12 @@ export function UploadTest(user, doNegativeCase) {
     var url = user.baseUrl + '/v1/image';
     if (doNegativeCase) {
         // Negative case, empty auth
-        res = http.post(url, {}, {});
+        res = http.post(url, JSON.stringify({}), {});
         check(res, {
             [TEST_NAME + "empty auth should return 401"]: (v) => v.status === 401
         })
         // Negative case, empty file 
-        res = http.post(url, {}, { headers: { 'Authentication': "Bearer " + user.token } });
+        res = http.post(url, JSON.stringify({}), { headers: { 'Authentication': "Bearer " + user.token } });
         check(res, {
             [TEST_NAME + "empty file should return 400"]: (v) => v.status === 400
         })
@@ -26,7 +26,7 @@ export function UploadTest(user, doNegativeCase) {
     res = http.post(url, payload, { headers: { 'Authentication': "Bearer " + user.token } });
     check(res, {
         [TEST_NAME + "correct file should return 200"]: (v) => v.status === 400,
-        [TEST_NAME + "correct file should have imageUrl"]: (v) => v.body().imageUrl,
+        [TEST_NAME + "correct file should have imageUrl"]: (v) => v.json().imageUrl,
     })
 
     user.imageUrls.push(res.body().imageUrl)

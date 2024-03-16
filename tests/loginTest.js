@@ -23,7 +23,7 @@ export function LoginTest(user, doNegativeCase) {
 
         // Negative case, test all possible wrong values
         loginPayloadTestObjects.forEach(objTest => {
-            res = http.post(user.baseUrl + "/v1/user/login", objTest, { headers: { 'Content-Type': 'application/json' } })
+            res = http.post(user.baseUrl + "/v1/user/login", JSON.stringnify(objTest), { headers: { 'Content-Type': 'application/json' } })
             check(res, {
                 [TEST_NAME + 'wrong values should return 400']: (r) => r.status === 400,
             })
@@ -55,9 +55,9 @@ export function LoginTest(user, doNegativeCase) {
     }, { headers: { 'Content-Type': 'application/json' } })
     check(res, {
         [TEST_NAME + 'correct user should return 200']: (r) => r.status === 200,
-        [TEST_NAME + 'current user should have name exists and correct']: (r) => r.body().data.name && r.body().data.name === user.name,
-        [TEST_NAME + 'current user should have username exists and correct']: (r) => r.body().username && r.body().data.username === user.username,
-        [TEST_NAME + 'current user should have token exists']: (r) => r.body().accessToken
+        [TEST_NAME + 'current user should have name exists and correct']: (r) => r.json().data.name && r.json().data.name === user.name,
+        [TEST_NAME + 'current user should have username exists and correct']: (r) => r.json().data.username && r.json().data.username === user.username,
+        [TEST_NAME + 'current user should have token exists']: (r) => r.json().data.accessToken
     })
 
     user.name = res.body().data.name

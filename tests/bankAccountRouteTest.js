@@ -29,7 +29,7 @@ export function BankAccountTest(user, doNegativeCase) {
         })
         // Negative case, test all possible wrong values
         bankAccountTestObjects.forEach(objTest => {
-            res = http.post(user.baseUrl + "/v1/bank/account", objTest, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+            res = http.post(user.baseUrl + "/v1/bank/account", JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })
@@ -47,7 +47,7 @@ export function BankAccountTest(user, doNegativeCase) {
         bankAccountName: "Supriyati",
         bankAccountNumber: "1241412311"
     }
-    res = http.post(user.baseUrl + "/v1/bank/account", createBankAcc, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+    res = http.post(user.baseUrl + "/v1/bank/account", JSON.stringify(objtest), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
     check(res, {
         [TEST_NAME + 'create bank account should return 200']: (v) => v.status === 200
     })
@@ -64,7 +64,7 @@ export function BankAccountTest(user, doNegativeCase) {
     res = http.get(user.baseUrl + "/v1/bank/account", { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
     check(res, {
         [TEST_NAME + 'get bank account should return 200']: (r) => r.status === 200,
-        [TEST_NAME + 'get bank account should have at least one bank account']: (r) => r.body().data.length > 0
+        [TEST_NAME + 'get bank account should have at least one bank account']: (r) => r.json().data.length > 0
     })
     const usrBankAccId = res.body().data[0].bankAccountId
 
@@ -91,7 +91,7 @@ export function BankAccountTest(user, doNegativeCase) {
         })
         // Negative case, test all possible wrong values
         bankAccountTestObjects.forEach(objTest => {
-            res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, objTest, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+            res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, JSON.stringify(objTest), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })
@@ -99,19 +99,19 @@ export function BankAccountTest(user, doNegativeCase) {
     }
 
     // Positive case
-    res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, updateBankAcc, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+    res = http.patch(user.baseUrl + "/v1/bank/account/" + usrBankAccId, JSON.stringify(updateBankAcc), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
     check(res, {
         [TEST_NAME + 'update bank account should return 200']: (r) => r.status === 200,
     })
     res = http.get(user.baseUrl + "/v1/bank/account", { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
     check(res, {
         [TEST_NAME + 'get bank account after update should return 200']: (r) => r.status === 200,
-        [TEST_NAME + 'get bank account should have at least one bank account']: (r) => r.body().data.length > 0
+        [TEST_NAME + 'get bank account should have at least one bank account']: (r) => r.json().data.length > 0
     })
     check(res, {
-        [TEST_NAME + 'bank account should be updated']: (v) => v.body().data[0].bankName === updateBankAcc.bankName,
-        [TEST_NAME + 'bank account name should be updated']: (v) => v.body().data[0].bankAccountName === updateBankAcc.bankAccountName,
-        [TEST_NAME + 'bank account number should be updated']: (v) => v.body().data[0].bankAccountNumber === updateBankAcc.bankAccountNumber
+        [TEST_NAME + 'bank account should be updated']: (v) => v.json().data[0].bankName === updateBankAcc.bankName,
+        [TEST_NAME + 'bank account name should be updated']: (v) => v.json().data[0].bankAccountName === updateBankAcc.bankAccountName,
+        [TEST_NAME + 'bank account number should be updated']: (v) => v.json().data[0].bankAccountNumber === updateBankAcc.bankAccountNumber
     })
 
     user.bankAccounts.push(

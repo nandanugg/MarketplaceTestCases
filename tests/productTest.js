@@ -27,18 +27,18 @@ export function ProductTest(user, doNegativeCase) {
     let res;
     if (doNegativeCase) {
         // Negative case, empty auth
-        res = http.post(user.baseUrl + "/v1/product", {}, { headers: { 'Content-Type': 'application/json' } })
+        res = http.post(user.baseUrl + "/v1/product", JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } })
         check(res, {
             [TEST_NAME + 'empty auth should return 401']: (r) => r.status === 401,
         })
         // Negative case, empty body 
-        res = http.post(user.baseUrl + "/v1/product", {}, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+        res = http.post(user.baseUrl + "/v1/product", JSON.stringify({}), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
         check(res, {
             [TEST_NAME + 'empty body should return 400']: (r) => r.status === 400,
         })
         // Negative case, test all possible wrong values
         addProductPayloadTestObjects.forEach(objTest => {
-            res = http.post(user.baseUrl + "/v1/product", objTest, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+            res = http.post(user.baseUrl + "/v1/product", JSON.stringnify(objTest), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
             check(res, {
                 [TEST_NAME + 'wrong value should return 400']: (r) => r.status === 400,
             })
@@ -46,7 +46,7 @@ export function ProductTest(user, doNegativeCase) {
     }
 
     // Positive case
-    res = http.post(user.baseUrl + "/v1/product", {
+    res = http.post(user.baseUrl + "/v1/product", JSON.stringify({
         name: generateUniqueName(),
         price: 1000,
         imageUrl: user.imageUrls[0],
@@ -54,7 +54,7 @@ export function ProductTest(user, doNegativeCase) {
         condition: "new",
         tags: ["okbeli"],
         isPurchaseable: true
-    }, { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
+    }), { headers: { 'Content-Type': 'application/json', 'Authentication': "Bearer " + user.token } })
     check(res, {
         [TEST_NAME + 'correct create product should return 200']: (r) => r.status === 200,
     })
