@@ -58,13 +58,12 @@ export const options = {
 // about authoring k6 scripts.
 //
 export default function () {
-  http.get('https://test.k6.io');
-  sleep(1);
+  NewUserJourneyTest()
 }
 
 function NewUserJourneyTest(baseUrl) {
   const user = {
-    baseUrl: baseUrl,
+    baseUrl: "http://localhost:8080",
     name: "",
     token: "",
     products: [],
