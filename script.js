@@ -76,6 +76,7 @@ function NewUserJourneyTest() {
 
   console.log("registration test started")
   user = RegistrationTest(user, true)
+  console.log("user token:", user.token)
   console.log("login test started")
   user = LoginTest(user, true)
   console.log("bank account test started")
