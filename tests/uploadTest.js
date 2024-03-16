@@ -26,7 +26,7 @@ export function UploadTest(user, doNegativeCase) {
     res = http.post(url, payload, { headers: { 'Authorization': "Bearer " + user.token } });
     check(res, {
         [TEST_NAME + "correct file should return 200"]: (v) => v.status === 200,
-        [TEST_NAME + "correct file should have imageUrl"]: (v) => v.body().imageUrl,
+        [TEST_NAME + "correct file should have imageUrl"]: (v) => v.json().imageUrl,
     })
 
     user.imageUrls.push(res.json().imageUrl)
