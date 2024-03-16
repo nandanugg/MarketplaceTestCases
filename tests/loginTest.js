@@ -30,29 +30,29 @@ export function LoginTest(user, doNegativeCase) {
         });
 
         // Negative case, not found user
-        res = http.post(user.baseUrl + "/v1/user/login", {
+        res = http.post(user.baseUrl + "/v1/user/login", JSON.stringify({
             username: generateUniqueUsername(),
             password: generateRandomPassword()
-        }, { headers: { 'Content-Type': 'application/json' } })
+        }), { headers: { 'Content-Type': 'application/json' } })
         check(res, {
             [TEST_NAME + 'user not found should return 404']: (r) => r.status === 404,
         })
 
         // Negative case, wrong password 
-        res = http.post(user.baseUrl + "/v1/user/login", {
+        res = http.post(user.baseUrl + "/v1/user/login", JSON.stringify({
             username: user.username,
             password: generateRandomPassword()
-        }, { headers: { 'Content-Type': 'application/json' } })
+        }), { headers: { 'Content-Type': 'application/json' } })
         check(res, {
             [TEST_NAME + 'wrong password should return 400']: (r) => r.status === 400,
         })
     }
 
     // Positive case 6
-    res = http.post(user.baseUrl + "/v1/user/login", {
+    res = http.post(user.baseUrl + "/v1/user/login", JSON.stringify({
         username: user.username,
         password: user.password
-    }, { headers: { 'Content-Type': 'application/json' } })
+    }), { headers: { 'Content-Type': 'application/json' } })
     check(res, {
         [TEST_NAME + 'correct user should return 200']: (r) => r.status === 200,
         [TEST_NAME + 'current user should have name exists and correct']: (r) => r.json().data.name && r.json().data.name === user.name,
