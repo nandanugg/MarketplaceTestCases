@@ -43,12 +43,11 @@ export function BankAccountTest(user, doNegativeCase) {
         bankAccountNumber: "00213415348123"
     }
     const createBankAcc = {
-        bankName: "BCA",
+        bankName: "BCA Syariah",
         bankAccountName: "Supriyati",
         bankAccountNumber: "1241412311"
     }
     const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } }
-    console.log(headers)
     res = http.post(user.baseUrl + "/v1/bank/account", JSON.stringify(createBankAcc), headers)
     check(res, {
         [TEST_NAME + 'create bank account should return 200']: (v) => v.status === 200
