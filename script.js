@@ -2,6 +2,9 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { RegistrationTest } from './tests/registerTest';
 import { LoginTest } from './tests/loginTest';
+import { BankAccountTest } from './tests/bankAccountRouteTest';
+import { UploadTest } from './tests/uploadTest';
+import { ProductTest } from './tests/ProductTest';
 
 export const options = {
   // A number specifying the number of VUs to run concurrently.
@@ -72,6 +75,9 @@ function NewUserJourneyTest(baseUrl) {
   }
   RegistrationTest(user, true)
   LoginTest(user, true)
+  BankAccountTest(user, true)
+  UploadTest(user, true)
+  ProductTest(user, true)
 }
 
 
