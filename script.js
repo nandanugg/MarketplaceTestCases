@@ -4,7 +4,7 @@ import { RegistrationTest } from './tests/registerTest.js';
 import { LoginTest } from './tests/loginTest.js';
 import { BankAccountTest } from './tests/bankAccountRouteTest.js';
 import { UploadTest } from './tests/uploadTest.js';
-import { ProductTest } from './tests/ProductTest.js';
+import { ProductTest } from './tests/productTest.js';
 
 export const options = {
   // A number specifying the number of VUs to run concurrently.
