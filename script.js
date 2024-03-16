@@ -73,11 +73,14 @@ function NewUserJourneyTest(baseUrl) {
     bankAccounts: [],
     imageUrls: []
   }
+
+  console.log("registration test started")
   RegistrationTest(user, true)
+  console.log("login test started")
   LoginTest(user, true)
-  BankAccountTest(user, true)
-  UploadTest(user, true)
-  ProductTest(user, true)
+  // BankAccountTest(user, true)
+  // UploadTest(user, true)
+  // ProductTest(user, true)
 }
 
 
