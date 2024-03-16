@@ -25,6 +25,7 @@ const TEST_NAME = "(product test)"
 
 export function ProductTest(user, doNegativeCase) {
     let res;
+    console.log("product test user", user)
     if (doNegativeCase) {
         // Negative case, empty auth
         res = http.post(user.baseUrl + "/v1/product", JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } })
