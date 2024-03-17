@@ -21,7 +21,7 @@ export function generateUniqueUsername() {
     const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
     const middle = middles[Math.floor(Math.random() * middles.length)];
     const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
-    const name = prefix + middle + suffix;
+    const name = prefix + middle + suffix + prefix;
 
     return name;
 }
