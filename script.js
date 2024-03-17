@@ -73,17 +73,12 @@ function NewUserJourneyTest() {
     imageUrls: []
   }
 
-  console.log("registration test started")
   user = RegistrationTest(user, true)
-  console.log("user token:", user.token)
-  console.log("login test started")
+  // console.log("user token:", user.token)
   user = LoginTest(user, true)
   if (user.token) {
-    console.log("bank account test started")
     user = BankAccountTest(user, true)
-    console.log("upload test started")
     user = UploadTest(user, true)
-    console.log("product test started")
     user = ProductTest(user, true)
   }
 }
