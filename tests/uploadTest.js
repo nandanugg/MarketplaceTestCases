@@ -8,7 +8,7 @@ var payload = {
 };
 export function UploadTest(user, doNegativeCase) {
     let res;
-    var url = user.baseUrl + '/v1/image';
+    var url = __ENV.BASE_URL + '/v1/image';
     if (doNegativeCase) {
         // Negative case, empty auth
         res = http.post(url, JSON.stringify({}), {});

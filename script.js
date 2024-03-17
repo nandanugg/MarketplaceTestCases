@@ -66,8 +66,6 @@ export default function () {
 
 function NewUserJourneyTest() {
   let user = {
-    baseUrl: "http://54.255.192.38:8000",
-    // baseUrl: "http://localhost:8000",
     name: "",
     token: "",
     products: [],
