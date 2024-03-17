@@ -78,12 +78,14 @@ function NewUserJourneyTest() {
   console.log("user token:", user.token)
   console.log("login test started")
   user = LoginTest(user, true)
-  console.log("bank account test started")
-  user = BankAccountTest(user, true)
-  console.log("upload test started")
-  user = UploadTest(user, true)
-  console.log("product test started")
-  user = ProductTest(user, true)
+  if (user.token) {
+    console.log("bank account test started")
+    user = BankAccountTest(user, true)
+    console.log("upload test started")
+    user = UploadTest(user, true)
+    console.log("product test started")
+    user = ProductTest(user, true)
+  }
 }
 
 
