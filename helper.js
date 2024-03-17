@@ -18,12 +18,15 @@ export function generateUniqueUsername() {
     const middles = ['dra', 'vi', 'na', 'lo', 'ki', 'sa', 'ra', 'li', 'mo', 'ne', 'ja', 'mi', 'ko'];
     const suffixes = ['son', 'ton', 'ly', 'en', 'er', 'an', 'ry', 'ley', 'leigh', 'sie', 'den', 'leya', 'vin', 'lyn', 'ley', 'don'];
 
-    const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-    const middle = middles[Math.floor(Math.random() * middles.length)];
-    const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
-    const name = prefix + middle + suffix + prefix;
+    let username = '';
+    while (username.length < 5 || username.length > 15) {
+        const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+        const middle = middles[Math.floor(Math.random() * middles.length)];
+        const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+        username = prefix + middle + suffix + prefix;
+    }
 
-    return name;
+    return username;
 }
 export function generateUniqueName() {
     // Define parts of names for generating random names
