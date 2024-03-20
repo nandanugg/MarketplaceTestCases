@@ -1,6 +1,6 @@
 import http from 'k6/http';
 import { check } from 'k6';
-import { generateRandomPassword, generateTestObjects, generateUniqueUsername } from "../helper.js";
+import { generateRandomPassword, generateTestObjects, generateUniqueUsername, isEqual, isExists } from "../helper.js";
 
 const loginPayloadTestObjects = generateTestObjects({
     username: { type: "string", minLength: 5, maxLength: 15, notNull: true },
@@ -54,12 +54,14 @@ export function LoginTest(user, doNegativeCase) {
         password: user.password
     })
     res = http.post(__ENV.BASE_URL + "/v1/user/login", postitivePayload, { headers: { 'Content-Type': 'application/json' } })
-    check(res, {
+    const isSucceed = check(res, {
         [TEST_NAME + 'correct user should return 200|' + postitivePayload]: (r) => r.status === 200,
-        [TEST_NAME + 'current user should have name exists and correct']: (r) => r.json().data.name && r.json().data.name === user.name,
-        [TEST_NAME + 'current user should have username exists and correct']: (r) => r.json().data.username && r.json().data.username === user.username,
-        [TEST_NAME + 'current user should have token exists']: (r) => r.json().data.accessToken
+        [TEST_NAME + 'current user should have name exists and correct']: (r) => isEqual(r, "data.name", user.name),
+        [TEST_NAME + 'current user should have username exists and correct']: (r) => isEqual(r, "data.username", user.username),
+        [TEST_NAME + 'current user should have token exists']: (r) => isExists(r, "data.accessToken")
     })
+
+    if (!isSucceed) return
 
     user.name = res.json().data.name
     user.username = res.json().data.username

@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { generateTestObjects } from "../helper.js";
+import { generateTestObjects, isExists } from "../helper.js";
 import { check } from 'k6';
 
 const bankAccountTestObjects = generateTestObjects({
@@ -49,9 +49,10 @@ export function BankAccountTest(user, doNegativeCase) {
     }
     const headers = { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } }
     res = http.post(__ENV.BASE_URL + "/v1/bank/account", JSON.stringify(createBankAcc), headers)
-    check(res, {
+    let isSuccess = check(res, {
         [TEST_NAME + 'create bank account should return 200']: (v) => v.status === 200
     })
+    if (!isSuccess) return
 
     if (doNegativeCase) {
         // Negative case, empty auth
@@ -63,10 +64,15 @@ export function BankAccountTest(user, doNegativeCase) {
 
     // Positive case
     res = http.get(__ENV.BASE_URL + "/v1/bank/account", { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
-    check(res, {
+    isSuccess = check(res, {
         [TEST_NAME + 'get bank account should return 200']: (r) => r.status === 200,
-        [TEST_NAME + 'get bank account should have at least one bank account']: (r) => r.json().data.length > 0
+        [TEST_NAME + 'get bank account should have at least one bank account']: (v) => {
+            const res = isExists(v, "data")
+            return Array.isArray(res) && res.length > 0
+        }
     })
+    if (!isSuccess) return
+
     const usrBankAccId = res.json().data[0].bankAccountId
 
     if (doNegativeCase) {
@@ -101,19 +107,46 @@ export function BankAccountTest(user, doNegativeCase) {
 
     // Positive case
     res = http.patch(__ENV.BASE_URL + "/v1/bank/account/" + usrBankAccId, JSON.stringify(updateBankAcc), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
-    check(res, {
+    isSuccess = check(res, {
         [TEST_NAME + 'patch bank account should return 200']: (r) => r.status === 200,
     })
+    if (!isSuccess) return
+
     res = http.get(__ENV.BASE_URL + "/v1/bank/account", { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
-    check(res, {
+    isSuccess = check(res, {
         [TEST_NAME + 'get bank account after update should return 200']: (r) => r.status === 200,
-        [TEST_NAME + 'get bank account should have at least one bank account']: (r) => r.json().data.length > 0
+        [TEST_NAME + 'get bank account should have at least one bank account']: (v) => {
+            const res = isExists(v, "data");
+            return Array.isArray(res) && res.length > 0;
+        }
     })
-    check(res, {
-        [TEST_NAME + 'bank account should be updated']: (v) => v.json().data[0].bankName === updateBankAcc.bankName,
-        [TEST_NAME + 'bank account name should be updated']: (v) => v.json().data[0].bankAccountName === updateBankAcc.bankAccountName,
-        [TEST_NAME + 'bank account number should be updated']: (v) => v.json().data[0].bankAccountNumber === updateBankAcc.bankAccountNumber
+    if (!isSuccess) return
+
+    isSuccess = check(res, {
+        [TEST_NAME + 'bank account should be updated']: (v) => {
+            const res = isExists(v, "data")
+            if (Array.isArray(res) && res.length > 0) {
+                return res[0].bankName === updateBankAcc.bankName
+            }
+            return false
+        },
+        [TEST_NAME + 'bank account name should be updated']: (v) => {
+            const res = isExists(v, "data")
+            if (Array.isArray(res) && res.length > 0) {
+                return res[0].bankAccountName === updateBankAcc.bankAccountName
+            }
+            return false
+        },
+        [TEST_NAME + 'bank account number should be updated']: (v) => {
+            const res = isExists(v, "data")
+            if (Array.isArray(res) && res.length > 0) {
+                return res[0].bankAccountNumber === updateBankAcc.bankAccountNumber
+            }
+            return false
+        },
+
     })
+    if (!isSuccess) return
 
     user.bankAccounts.push(
         res.json().data[0]

@@ -74,12 +74,14 @@ function NewUserJourneyTest() {
   }
 
   user = RegistrationTest(user, true)
-  // console.log("user token:", user.token)
-  user = LoginTest(user, true)
-  if (user.token) {
-    user = BankAccountTest(user, true)
-    user = UploadTest(user, true)
-    user = ProductTest(user, true)
+
+  if (user) {
+    user = LoginTest(user, true)
+    if (user.token) {
+      user = BankAccountTest(user, true)
+      user = UploadTest(user, true)
+      user = ProductTest(user, true)
+    }
   }
 }
 

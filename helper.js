@@ -1,3 +1,46 @@
+/**
+ * Checks wether k6 response have the data that query asks
+ * @param {import("k6/http").RefinedResponse<ResponseType | undefined>} v 
+ * @param {string} query 
+ */
+export function isExists(v, query) {
+    const splittedQuery = query.split(".")
+    const json = v.json()
+    let val;
+    if (json) {
+        val = json
+        splittedQuery.forEach(query => {
+            const v = val[query]
+            if (!v) {
+                return false
+            }
+            if (typeof v === "boolean") {
+                val = v.toString()
+            } else {
+                val = v
+            }
+        });
+        return val
+    }
+    return false
+}
+
+/**
+ * Checks wether k6 response have the data that query asks and match it
+ * @param {import("k6/http").RefinedResponse<ResponseType | undefined >} v 
+ * @param {string} query 
+ * @param {any} expected 
+ * @returns 
+ */
+export function isEqual(v, query, expected) {
+    const i = isExists(v, query)
+    let e = expected
+    if (typeof expected === "boolean") {
+        e = e.toString()
+    }
+    return i && i === e
+}
+
 
 export function generateRandomPassword() {
     const length = Math.floor(Math.random() * 11) + 5; // Random length between 5 and 15

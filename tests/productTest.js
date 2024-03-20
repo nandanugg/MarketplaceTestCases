@@ -9,7 +9,7 @@ const addProductPayloadTestObjects = generateTestObjects({
     stock: { type: "number", min: 0, notNull: true },
     condition: { type: "string", enum: ["new", "second"], notNull: true },
     tags: { type: "array", items: { type: "string" }, notNull: true },
-    isPurchaseable: { type: "boolean", notNull: true }
+    isPurchasable: { type: "boolean", notNull: true }
 }, {
     name: "burhans",
     price: 1000,
@@ -17,7 +17,7 @@ const addProductPayloadTestObjects = generateTestObjects({
     stock: 10,
     condition: "new",
     tags: ["barucyn"],
-    isPurchaseable: true
+    isPurchasable: true
 })
 
 
@@ -53,10 +53,12 @@ export function ProductTest(user, doNegativeCase) {
         stock: 10,
         condition: "new",
         tags: ["okbeli"],
-        isPurchaseable: true
+        isPurchasable: true
     }), { headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + user.token } })
     check(res, {
-        [TEST_NAME + 'correct create product should return 200']: (r) => r.status === 200,
+        [TEST_NAME + 'correct create product should return 200']: (r) => {
+            return r.status === 200
+        },
     })
     return user
 }

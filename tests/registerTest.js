@@ -1,5 +1,5 @@
 import { check } from 'k6';
-import { generateTestObjects, generateUniqueName, generateRandomPassword, generateUniqueUsername } from "../helper.js";
+import { generateTestObjects, generateUniqueName, generateRandomPassword, generateUniqueUsername, isEqual, isExists } from "../helper.js";
 import http from 'k6/http';
 
 const registerPayloadTestObjects = generateTestObjects({
@@ -34,31 +34,31 @@ export function RegistrationTest(user, doNegativeCase) {
     }
 
     // Positive case 6
-    const genUsrname = generateUniqueUsername()
-    const genPassword = generateRandomPassword()
-    const postitivePayload = JSON.stringify({
-        username: genUsrname,
-        password: genPassword,
+    const usr = {
+        username: generateUniqueUsername(),
+        password: generateRandomPassword(),
         name: generateUniqueName()
-    })
+    }
+    const postitivePayload = JSON.stringify(usr)
     res = http.post(__ENV.BASE_URL + "/v1/user/register", postitivePayload, { headers: { 'Content-Type': 'application/json' } })
 
-    check(res, {
+    const isSucceed = check(res, {
         [TEST_NAME + 'correct user shoud return 201|' + postitivePayload]: (r) => r.status === 201,
-        [TEST_NAME + 'correct user should return name']: (r) => r.json().data && r.json().data.name,
-        [TEST_NAME + 'correct user should return username']: (r) => r.json().data && r.json().data.username,
-        [TEST_NAME + 'correct user should return accessToken']: (r) => r.json().data && r.json().data.accessToken
+        [TEST_NAME + 'current user should have name exists and correct']: (r) => isEqual(r, "data.name", usr.name),
+        [TEST_NAME + 'current user should have username exists and correct']: (r) => isEqual(r, "data.username", usr.username),
+        [TEST_NAME + 'current user should have token exists']: (r) => isExists(r, "data.accessToken")
     })
+    if (!isSucceed) return
 
     user.name = res.json().data.name
     user.username = res.json().data.username
-    user.password = genPassword
+    user.password = usr.password
     user.token = res.json().data.accessToken
 
     if (doNegativeCase) {
         // Negative case, username exists
         res = http.post(__ENV.BASE_URL + "/v1/user/register", JSON.stringify({
-            username: genUsrname,
+            username: usr.username,
             name: generateUniqueName(),
             password: generateRandomPassword()
         }), { headers: { 'Content-Type': 'application/json' } })
